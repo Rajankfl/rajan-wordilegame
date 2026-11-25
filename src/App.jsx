@@ -3,7 +3,7 @@ import useWordle from './hooks/useWordle';
 import usePhysicalKeyboard from './hooks/usePhysicalKeyboard';
 
 function App() {
-  const { currentGuess, pastGuesses, handleKey } = useWordle();
+  const { currentGuess, pastGuesses, evaluations, handleKey } = useWordle();
 
   usePhysicalKeyboard(handleKey);
 
@@ -12,7 +12,7 @@ function App() {
       <header className="header">
         <h1>Wordle</h1>
       </header>
-      <GameBoard pastGuesses={pastGuesses} evaluations={[]} currentGuess={currentGuess} />
+      <GameBoard pastGuesses={pastGuesses} evaluations={evaluations} currentGuess={currentGuess} />
     </div>
   );
 }

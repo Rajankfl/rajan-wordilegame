@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { evaluateGuess } from '../utils/evaluateGuess';
 import { getRandomWord, MAX_GUESSES, WORD_LENGTH } from '../utils/words';
 
 export const GAME_STATUS = {
@@ -14,6 +15,11 @@ function useWordle() {
   const [gameStatus] = useState(GAME_STATUS.IN_PROGRESS);
 
   const isPlaying = gameStatus === GAME_STATUS.IN_PROGRESS;
+
+  const evaluations = useMemo(
+    () => pastGuesses.map((guess) => evaluateGuess(guess, solutionWord)),
+    [pastGuesses, solutionWord]
+  );
 
   const addLetter = useCallback(
     (letter) => {
@@ -52,6 +58,7 @@ function useWordle() {
     solutionWord,
     currentGuess,
     pastGuesses,
+    evaluations,
     gameStatus,
     handleKey,
   };
