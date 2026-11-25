@@ -7,6 +7,7 @@
   justify-content: center;
   padding: 16px;
   background-color: rgba(0, 0, 0, 0.6);
+  animation: fade-in 200ms ease-out;
 }
 
 .modal {
@@ -17,6 +18,7 @@
   background-color: var(--color-modal);
   text-align: center;
   box-shadow: 0 4px 23px rgba(0, 0, 0, 0.4);
+  animation: slide-up 250ms ease-out;
 }
 
 .modal h2 {
@@ -65,4 +67,17 @@
 
 .modal-button:hover {
   filter: brightness(1.1);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
 }

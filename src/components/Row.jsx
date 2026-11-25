@@ -5,7 +5,7 @@ import './Row.css';
 function Row({ letters = '', statuses, shake = false, onShakeEnd }) {
   const tiles = [];
   for (let i = 0; i < WORD_LENGTH; i++) {
-    tiles.push(<Tile key={i} letter={letters[i]} status={statuses?.[i]} />);
+    tiles.push(<Tile key={i} letter={letters[i]} status={statuses?.[i]} position={i} />);
   }
 
   return (

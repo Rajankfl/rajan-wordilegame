@@ -53,3 +53,19 @@
 .key-spacer {
   flex: 0.5;
 }
+
+@media (max-height: 640px) {
+  .key {
+    height: 48px;
+  }
+}
+
+@media (max-width: 360px) {
+  .keyboard-row {
+    gap: 4px;
+  }
+
+  .key {
+    font-size: 1rem;
+  }
+}

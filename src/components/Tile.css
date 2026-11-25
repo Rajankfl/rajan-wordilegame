@@ -14,6 +14,7 @@
 
 .tile.filled {
   border-color: var(--color-border-filled);
+  animation: pop 100ms ease-in-out;
 }
 
 .tile.correct,
@@ -24,13 +25,74 @@
 }
 
 .tile.correct {
-  background-color: var(--color-correct);
+  --tile-bg: var(--color-correct);
 }
 
 .tile.present {
-  background-color: var(--color-present);
+  --tile-bg: var(--color-present);
 }
 
 .tile.absent {
-  background-color: var(--color-absent);
+  --tile-bg: var(--color-absent);
+}
+
+.tile.correct,
+.tile.present,
+.tile.absent {
+  background-color: var(--tile-bg);
+}
+
+.tile.reveal {
+  animation-name: flip;
+  animation-timing-function: ease-in;
+  animation-fill-mode: backwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.85);
+  }
+  40% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* The tile keeps its "typed" look until it is edge-on, then shows its color. */
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+    border-color: var(--color-border-filled);
+    background-color: transparent;
+    color: var(--color-text);
+  }
+  50% {
+    transform: rotateX(-90deg);
+    border-color: var(--color-border-filled);
+    background-color: transparent;
+    color: var(--color-text);
+  }
+  51% {
+    border-color: transparent;
+    background-color: var(--tile-bg);
+    color: #ffffff;
+  }
+  100% {
+    transform: rotateX(0);
+  }
+}
+
+@media (max-height: 640px) {
+  .tile {
+    font-size: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile.filled,
+  .tile.reveal {
+    animation: none;
+  }
 }
