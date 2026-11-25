@@ -1,6 +1,7 @@
 import GameBoard from './components/GameBoard';
 import GameOverModal from './components/GameOverModal';
 import Keyboard from './components/Keyboard';
+import Toast from './components/Toast';
 import useWordle, { GAME_STATUS } from './hooks/useWordle';
 import usePhysicalKeyboard from './hooks/usePhysicalKeyboard';
 
@@ -12,6 +13,9 @@ function App() {
     evaluations,
     keyStatuses,
     gameStatus,
+    message,
+    isInvalidGuess,
+    clearInvalidGuess,
     handleKey,
     resetGame,
   } = useWordle();
@@ -23,7 +27,14 @@ function App() {
       <header className="header">
         <h1>Wordle</h1>
       </header>
-      <GameBoard pastGuesses={pastGuesses} evaluations={evaluations} currentGuess={currentGuess} />
+      <Toast message={message} />
+      <GameBoard
+        pastGuesses={pastGuesses}
+        evaluations={evaluations}
+        currentGuess={currentGuess}
+        isInvalidGuess={isInvalidGuess}
+        onShakeEnd={clearInvalidGuess}
+      />
       <Keyboard keyStatuses={keyStatuses} onKey={handleKey} />
 
       {gameStatus !== GAME_STATUS.IN_PROGRESS && (

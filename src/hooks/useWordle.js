@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { evaluateGuess, getKeyStatuses } from '../utils/evaluateGuess';
-import { getRandomWord, MAX_GUESSES, WORD_LENGTH } from '../utils/words';
+import { getRandomWord, isValidWord, MAX_GUESSES, WORD_LENGTH } from '../utils/words';
 
 export const GAME_STATUS = {
   IN_PROGRESS: 'IN_PROGRESS',
@@ -13,6 +13,27 @@ function useWordle() {
   const [currentGuess, setCurrentGuess] = useState('');
   const [pastGuesses, setPastGuesses] = useState([]);
   const [gameStatus, setGameStatus] = useState(GAME_STATUS.IN_PROGRESS);
+  const [message, setMessage] = useState('');
+  const [isInvalidGuess, setIsInvalidGuess] = useState(false);
+  const messageTimer = useRef(null);
+
+  useEffect(() => () => clearTimeout(messageTimer.current), []);
+
+  const showMessage = useCallback((text, duration = 1500) => {
+    clearTimeout(messageTimer.current);
+    setMessage(text);
+    messageTimer.current = setTimeout(() => setMessage(''), duration);
+  }, []);
+
+  const rejectGuess = useCallback(
+    (text) => {
+      showMessage(text);
+      setIsInvalidGuess(true);
+    },
+    [showMessage]
+  );
+
+  const clearInvalidGuess = useCallback(() => setIsInvalidGuess(false), []);
 
   const isPlaying = gameStatus === GAME_STATUS.IN_PROGRESS;
 
@@ -43,8 +64,15 @@ function useWordle() {
 
   const submitGuess = useCallback(() => {
     if (!isPlaying) return;
-    if (currentGuess.length !== WORD_LENGTH) return;
     if (pastGuesses.length >= MAX_GUESSES) return;
+    if (currentGuess.length !== WORD_LENGTH) {
+      rejectGuess('Not enough letters');
+      return;
+    }
+    if (!isValidWord(currentGuess)) {
+      rejectGuess('Not in word list');
+      return;
+    }
 
     const nextGuesses = [...pastGuesses, currentGuess];
     setPastGuesses(nextGuesses);
@@ -55,13 +83,16 @@ function useWordle() {
     } else if (nextGuesses.length === MAX_GUESSES) {
       setGameStatus(GAME_STATUS.LOST);
     }
-  }, [isPlaying, currentGuess, pastGuesses, solutionWord]);
+  }, [isPlaying, currentGuess, pastGuesses, solutionWord, rejectGuess]);
 
   const resetGame = useCallback(() => {
     setSolutionWord((previous) => getRandomWord(previous));
     setCurrentGuess('');
     setPastGuesses([]);
     setGameStatus(GAME_STATUS.IN_PROGRESS);
+    setIsInvalidGuess(false);
+    clearTimeout(messageTimer.current);
+    setMessage('');
   }, []);
 
   const handleKey = useCallback(
@@ -80,6 +111,9 @@ function useWordle() {
     evaluations,
     keyStatuses,
     gameStatus,
+    message,
+    isInvalidGuess,
+    clearInvalidGuess,
     handleKey,
     resetGame,
   };
