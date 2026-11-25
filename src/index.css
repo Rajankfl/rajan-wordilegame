@@ -6,6 +6,7 @@
   --color-correct: #538d4e;
   --color-present: #b59f3b;
   --color-absent: #3a3a3c;
+  --color-key: #818384;
   font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
   color: var(--color-text);
   background-color: var(--color-bg);

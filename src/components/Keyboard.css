@@ -1,0 +1,43 @@
+.keyboard {
+  padding: 0 8px 8px;
+  user-select: none;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  touch-action: manipulation;
+}
+
+.key {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: 58px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background-color: var(--color-key);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.key.wide {
+  flex: 1.5;
+  font-size: 0.75rem;
+}
+
+.key:active {
+  filter: brightness(0.85);
+}
+
+.key-spacer {
+  flex: 0.5;
+}
