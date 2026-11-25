@@ -1,12 +1,18 @@
 import GameBoard from './components/GameBoard';
+import useWordle from './hooks/useWordle';
+import usePhysicalKeyboard from './hooks/usePhysicalKeyboard';
 
 function App() {
+  const { currentGuess, pastGuesses, handleKey } = useWordle();
+
+  usePhysicalKeyboard(handleKey);
+
   return (
     <div className="app">
       <header className="header">
         <h1>Wordle</h1>
       </header>
-      <GameBoard pastGuesses={[]} evaluations={[]} currentGuess="" />
+      <GameBoard pastGuesses={pastGuesses} evaluations={[]} currentGuess={currentGuess} />
     </div>
   );
 }
