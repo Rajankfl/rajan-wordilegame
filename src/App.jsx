@@ -1,10 +1,20 @@
 import GameBoard from './components/GameBoard';
+import GameOverModal from './components/GameOverModal';
 import Keyboard from './components/Keyboard';
-import useWordle from './hooks/useWordle';
+import useWordle, { GAME_STATUS } from './hooks/useWordle';
 import usePhysicalKeyboard from './hooks/usePhysicalKeyboard';
 
 function App() {
-  const { currentGuess, pastGuesses, evaluations, keyStatuses, handleKey } = useWordle();
+  const {
+    solutionWord,
+    currentGuess,
+    pastGuesses,
+    evaluations,
+    keyStatuses,
+    gameStatus,
+    handleKey,
+    resetGame,
+  } = useWordle();
 
   usePhysicalKeyboard(handleKey);
 
@@ -15,6 +25,15 @@ function App() {
       </header>
       <GameBoard pastGuesses={pastGuesses} evaluations={evaluations} currentGuess={currentGuess} />
       <Keyboard keyStatuses={keyStatuses} onKey={handleKey} />
+
+      {gameStatus !== GAME_STATUS.IN_PROGRESS && (
+        <GameOverModal
+          gameStatus={gameStatus}
+          solutionWord={solutionWord}
+          guessCount={pastGuesses.length}
+          onPlayAgain={resetGame}
+        />
+      )}
     </div>
   );
 }

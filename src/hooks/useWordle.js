@@ -9,10 +9,10 @@ export const GAME_STATUS = {
 };
 
 function useWordle() {
-  const [solutionWord] = useState(() => getRandomWord());
+  const [solutionWord, setSolutionWord] = useState(() => getRandomWord());
   const [currentGuess, setCurrentGuess] = useState('');
   const [pastGuesses, setPastGuesses] = useState([]);
-  const [gameStatus] = useState(GAME_STATUS.IN_PROGRESS);
+  const [gameStatus, setGameStatus] = useState(GAME_STATUS.IN_PROGRESS);
 
   const isPlaying = gameStatus === GAME_STATUS.IN_PROGRESS;
 
@@ -46,9 +46,23 @@ function useWordle() {
     if (currentGuess.length !== WORD_LENGTH) return;
     if (pastGuesses.length >= MAX_GUESSES) return;
 
-    setPastGuesses((guesses) => [...guesses, currentGuess]);
+    const nextGuesses = [...pastGuesses, currentGuess];
+    setPastGuesses(nextGuesses);
     setCurrentGuess('');
-  }, [isPlaying, currentGuess, pastGuesses.length]);
+
+    if (currentGuess === solutionWord) {
+      setGameStatus(GAME_STATUS.WON);
+    } else if (nextGuesses.length === MAX_GUESSES) {
+      setGameStatus(GAME_STATUS.LOST);
+    }
+  }, [isPlaying, currentGuess, pastGuesses, solutionWord]);
+
+  const resetGame = useCallback(() => {
+    setSolutionWord((previous) => getRandomWord(previous));
+    setCurrentGuess('');
+    setPastGuesses([]);
+    setGameStatus(GAME_STATUS.IN_PROGRESS);
+  }, []);
 
   const handleKey = useCallback(
     (key) => {
@@ -67,6 +81,7 @@ function useWordle() {
     keyStatuses,
     gameStatus,
     handleKey,
+    resetGame,
   };
 }
 

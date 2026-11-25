@@ -1,6 +1,8 @@
 :root {
   --color-bg: #121213;
   --color-text: #ffffff;
+  --color-text-muted: #c4c4c4;
+  --color-modal: #1f1f20;
   --color-border: #3a3a3c;
   --color-border-filled: #565758;
   --color-correct: #538d4e;

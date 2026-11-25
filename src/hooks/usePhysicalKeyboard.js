@@ -6,6 +6,8 @@ function usePhysicalKeyboard(onKey) {
   useEffect(() => {
     function handleKeyDown(event) {
       if (event.ctrlKey || event.metaKey || event.altKey) return;
+      // Let focused buttons (e.g. "Play Again") handle their own keys.
+      if (event.target instanceof HTMLButtonElement) return;
 
       const { key } = event;
       if (key === 'Enter') {
