@@ -4,7 +4,7 @@ import useWordle from './hooks/useWordle';
 import usePhysicalKeyboard from './hooks/usePhysicalKeyboard';
 
 function App() {
-  const { currentGuess, pastGuesses, evaluations, handleKey } = useWordle();
+  const { currentGuess, pastGuesses, evaluations, keyStatuses, handleKey } = useWordle();
 
   usePhysicalKeyboard(handleKey);
 
@@ -14,7 +14,7 @@ function App() {
         <h1>Wordle</h1>
       </header>
       <GameBoard pastGuesses={pastGuesses} evaluations={evaluations} currentGuess={currentGuess} />
-      <Keyboard onKey={handleKey} />
+      <Keyboard keyStatuses={keyStatuses} onKey={handleKey} />
     </div>
   );
 }

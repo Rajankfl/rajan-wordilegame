@@ -17,10 +17,11 @@ function BackspaceIcon() {
   );
 }
 
-function Key({ value, onKey }) {
+function Key({ value, status, onKey }) {
   const isWide = value === 'ENTER' || value === 'BACKSPACE';
   const classes = ['key'];
   if (isWide) classes.push('wide');
+  if (status) classes.push(status);
 
   return (
     <button
@@ -39,14 +40,14 @@ function Key({ value, onKey }) {
   );
 }
 
-function Keyboard({ onKey }) {
+function Keyboard({ keyStatuses = {}, onKey }) {
   return (
     <div className="keyboard">
       {KEY_ROWS.map((row, i) => (
         <div className="keyboard-row" key={i}>
           {i === 1 && <div className="key-spacer" />}
           {row.map((key) => (
-            <Key key={key} value={key} onKey={onKey} />
+            <Key key={key} value={key} status={keyStatuses[key]} onKey={onKey} />
           ))}
           {i === 1 && <div className="key-spacer" />}
         </div>

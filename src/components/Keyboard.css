@@ -34,6 +34,18 @@
   font-size: 0.75rem;
 }
 
+.key.correct {
+  background-color: var(--color-correct);
+}
+
+.key.present {
+  background-color: var(--color-present);
+}
+
+.key.absent {
+  background-color: var(--color-absent);
+}
+
 .key:active {
   filter: brightness(0.85);
 }

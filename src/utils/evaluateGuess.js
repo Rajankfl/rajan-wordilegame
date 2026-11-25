@@ -30,3 +30,28 @@ export function evaluateGuess(guess, solution) {
 
   return result;
 }
+
+const STATUS_RANK = {
+  [LETTER_STATUS.ABSENT]: 1,
+  [LETTER_STATUS.PRESENT]: 2,
+  [LETTER_STATUS.CORRECT]: 3,
+};
+
+// Builds a letter -> status map for the keyboard. A letter keeps the best
+// status it has earned so far (correct > present > absent).
+export function getKeyStatuses(guesses, evaluations) {
+  const statuses = {};
+
+  guesses.forEach((guess, row) => {
+    for (let i = 0; i < guess.length; i++) {
+      const letter = guess[i];
+      const status = evaluations[row][i];
+      const current = statuses[letter];
+      if (!current || STATUS_RANK[status] > STATUS_RANK[current]) {
+        statuses[letter] = status;
+      }
+    }
+  });
+
+  return statuses;
+}

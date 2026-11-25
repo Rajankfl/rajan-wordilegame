@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { evaluateGuess } from '../utils/evaluateGuess';
+import { evaluateGuess, getKeyStatuses } from '../utils/evaluateGuess';
 import { getRandomWord, MAX_GUESSES, WORD_LENGTH } from '../utils/words';
 
 export const GAME_STATUS = {
@@ -19,6 +19,11 @@ function useWordle() {
   const evaluations = useMemo(
     () => pastGuesses.map((guess) => evaluateGuess(guess, solutionWord)),
     [pastGuesses, solutionWord]
+  );
+
+  const keyStatuses = useMemo(
+    () => getKeyStatuses(pastGuesses, evaluations),
+    [pastGuesses, evaluations]
   );
 
   const addLetter = useCallback(
@@ -59,6 +64,7 @@ function useWordle() {
     currentGuess,
     pastGuesses,
     evaluations,
+    keyStatuses,
     gameStatus,
     handleKey,
   };
