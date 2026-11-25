@@ -7,9 +7,9 @@ export const MAX_GUESSES = 6;
 export function getRandomWord(exclude) {
   let word;
   do {
-    word = ANSWERS[Math.floor(Math.random() * ANSWERS.length)];
+    word = ANSWERS[Math.floor(Math.random() * ANSWERS.length)].toUpperCase();
   } while (word === exclude && ANSWERS.length > 1);
-  return word.toUpperCase();
+  return word;
 }
 
 export function isValidWord(word) {
