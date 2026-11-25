@@ -1,0 +1,36 @@
+.tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 2px solid var(--color-border);
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.tile.filled {
+  border-color: var(--color-border-filled);
+}
+
+.tile.correct,
+.tile.present,
+.tile.absent {
+  border-color: transparent;
+  color: #ffffff;
+}
+
+.tile.correct {
+  background-color: var(--color-correct);
+}
+
+.tile.present {
+  background-color: var(--color-present);
+}
+
+.tile.absent {
+  background-color: var(--color-absent);
+}
