@@ -1,0 +1,39 @@
+:root {
+  --color-bg: #121213;
+  --color-text: #ffffff;
+  --color-border: #3a3a3c;
+  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.header {
+  border-bottom: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.header h1 {
+  margin: 12px 0;
+  font-size: 32px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
